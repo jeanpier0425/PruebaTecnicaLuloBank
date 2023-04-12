@@ -5,10 +5,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
+import static co.com.lulobank.utils.constans.GeneralConstant.KEY_SERVICE;
+
 public class ServicesProperties {
 
     private static Properties prop = null;
-    private ServicesProperties() {
+    public static String keyServiceValue;
+
+    static {
+        try {
+            keyServiceValue = getProperties(KEY_SERVICE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ServicesProperties() throws IOException {
         throw new IllegalStateException();
     }
     public static void loadProperties() throws IOException {
