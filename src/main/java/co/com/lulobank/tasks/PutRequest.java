@@ -29,7 +29,8 @@ public class PutRequest implements Task {
                 )
         );
         SerenityRest.lastResponse().prettyPrint();
-        ServiceResponse.objectService().setResponse(SerenityRest.lastResponse().getBody().asString());
+        ServiceResponse.setRequest(requestConsume);
+        ServiceResponse.setResponse(SerenityRest.lastResponse().getBody().asString());
     }
 
     public static PutRequest onEndPoint(String requestConsume){

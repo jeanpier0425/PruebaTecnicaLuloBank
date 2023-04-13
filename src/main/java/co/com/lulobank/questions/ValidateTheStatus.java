@@ -8,6 +8,7 @@ public class ValidateTheStatus implements Question<String> {
 
     @Override
     public String answeredBy(Actor actor) {
+        System.out.println("the status code is: "+String.valueOf(SerenityRest.lastResponse().getStatusCode()));
         return String.valueOf(SerenityRest.lastResponse().getStatusCode());
     }
 

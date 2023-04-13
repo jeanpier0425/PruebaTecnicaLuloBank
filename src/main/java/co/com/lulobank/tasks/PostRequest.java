@@ -32,8 +32,8 @@ public class PostRequest implements Task {
                     )
             );
         SerenityRest.lastResponse().prettyPrint();
-        ServiceResponse.objectService().setRequest(requestConsume);
-        ServiceResponse.objectService().setResponse(SerenityRest.lastResponse().getBody().asString());
+        ServiceResponse.setRequest(requestConsume);
+        ServiceResponse.setResponse(SerenityRest.lastResponse().getBody().asString());
     }
 
     public static PostRequest onTheEndPoint(String requestConsume){

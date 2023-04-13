@@ -1,17 +1,33 @@
 package co.com.lulobank.models.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class ServiceResponse {
 
-    private  String response;
-    private  String status;
-    private  String request;
+    private static String response;
+    private static String status;
+    private static String request;
 
-    public static ServiceResponse objectService(){
-        return new ServiceResponse();
+
+    public static String getRequest() {
+        return request;
+    }
+
+    public static void setRequest(String request) {
+        ServiceResponse.request = request;
+    }
+
+    public static String getStatus() {
+        return status;
+    }
+
+    public static void setStatus(String status) {
+        ServiceResponse.status = status;
+    }
+
+    public static String getResponse() {
+        return ServiceResponse.response;
+    }
+
+    public static void setResponse(String response) {
+        ServiceResponse.response = response;
     }
 }

@@ -4,6 +4,7 @@ import co.com.lulobank.questions.*;
 import co.com.lulobank.tasks.DeleteRequest;
 import co.com.lulobank.tasks.GetRequest;
 import co.com.lulobank.tasks.RequestManage;
+import co.com.lulobank.tasks.WrongAppIdKey;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -31,6 +32,11 @@ public class LuloBankStepDefinition {
         theActorInTheSpotlight().attemptsTo(DeleteRequest.onEndPoint());
     }
 
+    @When("^a wrong request (.*)$")
+    public void aWrongRequestTypeGetIsExecuted(String typeErrorKey) throws Exception {
+        theActorInTheSpotlight().attemptsTo(WrongAppIdKey.onEndPoint(typeErrorKey));
+    }
+
     @Then("^status (.*)$")
     public void status(String statusCode) throws Exception {
         theActorInTheSpotlight().should(seeThat(ValidateTheStatus.code(), equalTo(statusCode)));
@@ -42,7 +48,7 @@ public class LuloBankStepDefinition {
     }
 
     @Then("^validate user$")
-    public void validateEmployee( List<Map<String,String>> user) {
+    public void validateUser(List<Map<String,String>> user) {
         theActorInTheSpotlight().should(seeThat(ValidateUser.with(user)));
     }
 
@@ -59,5 +65,10 @@ public class LuloBankStepDefinition {
     @Then("^validate delete response with (.*)$")
     public void validateDeleteResponse(String id) {
         theActorInTheSpotlight().should(seeThat(ValidateDeleteResponse.onEndPoint(), equalTo(id)));
+    }
+
+    @Then("^validate error message with (.*)$")
+    public void validateErrorMessage(String messageError) {
+        theActorInTheSpotlight().should(seeThat(ValidateErrorMessage.onService(), equalTo(messageError)));
     }
 }

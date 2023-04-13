@@ -1,16 +1,19 @@
 Feature: Lulo Bank Api testing - Technical Test
 
+  @GetList
+    @HappyPath
   Scenario Outline: Get Users List
     Given the endpoint is prepared with <path>
     When  a request type get is executed
     Then  status <statusService>
     And validate <field> and in the response
 
-
     Examples:
-      | path | statusService | field   |
-      | user | 200           | success |
+      | path | statusService | field |
+      | user | 200           | total |
 
+  @GetUserById
+    @HappyPath
   Scenario Outline:Get user by id
     Given the endpoint is prepared with <path>/<id>
     When a request type get is executed
@@ -20,9 +23,11 @@ Feature: Lulo Bank Api testing - Technical Test
       | <id> | <firstName> | <lastName> | <email> | <registerDate> | <updatedDate> |
 
     Examples:
-      | path | id | statusService | id                       | firstName | lastName | email                 | registerDate             | updatedDate              |
-      | user | 1  | 200           | 6435beb929e65537a8aa5834 | Michael   | Page     | testpro@correo.com.co | 2023-04-11T20:10:33.937Z | 2023-04-11T20:13:33.441Z |
+      | path | statusService | id                       | firstName | lastName | email                           | registerDate             | updatedDate              |
+      | user | 200           | 64378477965c6daf8813a3f7 | Albert    | thrump   | testautomationpro@correo.com.co | 2023-04-13T04:26:31.125Z | 2023-04-13T04:26:31.125Z |
 
+  @CreateUser
+    @HappyPath
   Scenario Outline:Create user
     Given the endpoint is prepared with <path>
     When the service is type post with request <request>
@@ -30,10 +35,12 @@ Feature: Lulo Bank Api testing - Technical Test
     And validate create response type post
 
     Examples:
-      | path        | request                                                                          | statusService |
-      | user/create | {"firstName":"testName","lastName":"Myers","email":"testEmailPro@correo.com.co"} | 200           |
+      | path        | request                                                                                      | statusService |
+      | user/create | {"firstName":"testAutoNewName","lastName":"Cruise","email":"testEmailNewAuto@correo.com.co"} | 200           |
 
 
+  @UpdateUser
+    @HappyPath
   Scenario Outline:Update user
     Given the endpoint is prepared with <path>/<id>
     When the service is type put with request <request>
@@ -41,16 +48,56 @@ Feature: Lulo Bank Api testing - Technical Test
     And validate update response type put
 
     Examples:
-      | path | id                       | request                                        | statusService |
-      | user | 6435beb929e65537a8aa5834 | {"firstName":"testNamePro","lastName":"Myers"} | 200           |
+      | path | id                       | request                                            | statusService |
+      | user | 64378477965c6daf8813a3f7 | {"firstName":"testNameProAd","lastName":"Myers J"} | 200           |
 
-  Scenario Outline:Delete employee
+  @DeleteUserById
+    @HappyPath
+  Scenario Outline:Delete user
     Given the endpoint is prepared with <path>/<id>
     When  the service is type delete
     Then status <statusService>
     And validate delete response with <id>
 
     Examples:
-      | path   | id                       | statusService |
-      | delete | 6435beb929e65537a8aa5834 | 200           |
+      | path | id                       | statusService |
+      | user | 6435beb929e65537a8aa5834 | 200           |
 
+  @UnHappyPath
+    @unhappyAppId
+  Scenario Outline: Unhappy tests for AppId
+    Given the endpoint is prepared with <path>/<id>
+    When a wrong request <typeErrorKey>
+    Then status <statusService>
+    And validate error message with <messageError>
+
+
+    Examples:
+      | path | statusService | id                       | typeErrorKey | messageError     |
+      | user | 403           | 6435beb929e65537a8aa5834 | NOT_EXIST    | APP_ID_NOT_EXIST |
+      | user | 403           | 6435beb929e65537a8aa5834 | KEY_MISSING  | APP_ID_MISSING   |
+
+  @UnHappyPath
+    @parameternotvalid
+  Scenario Outline: Parameters not valid by id
+    Given the endpoint is prepared with <path>/<id>
+    When a request type get is executed
+    Then status <statusService>
+    And validate error message with <messageError>
+
+
+    Examples:
+      | path | statusService | id          | messageError     |
+      | user | 400           | notvalid741 | PARAMS_NOT_VALID |
+
+  @UnHappyPath
+    @bodyNotValid
+  Scenario Outline: Body not valid
+    Given the endpoint is prepared with <path>
+    When the service is type post with request <request>
+    Then status <statusService>
+    And validate error message with <messageError>
+
+    Examples:
+      | path        | request                                                                                       | statusService | messageError   |
+      | user/create | {"firstName":"testNewName","nickname":"Obama","email":"testEmailNew@correo.com.co","age":200} | 400           | BODY_NOT_VALID |

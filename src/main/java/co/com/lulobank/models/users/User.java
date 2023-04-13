@@ -14,4 +14,5 @@ public class User {
     private String email;
     private String registerDate;
     private String updatedDate;
+    private User userData;
 }

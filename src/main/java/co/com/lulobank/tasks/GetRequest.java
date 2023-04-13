@@ -22,7 +22,7 @@ public class GetRequest implements Task {
                 )
         );
         SerenityRest.lastResponse().prettyPrint();
-        ServiceResponse.objectService().setResponse(SerenityRest.lastResponse().getBody().asString());
+        ServiceResponse.setResponse(SerenityRest.lastResponse().getBody().asString());
     }
     public static GetRequest service(){
         return Tasks.instrumented(GetRequest.class);

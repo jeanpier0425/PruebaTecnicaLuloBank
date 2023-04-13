@@ -1,7 +1,6 @@
 package co.com.lulobank.questions;
 
 import co.com.lulobank.models.entities.ServiceResponse;
-import co.com.lulobank.models.users.GetUserModel;
 import co.com.lulobank.models.users.User;
 import co.com.lulobank.utils.compare.UsersCompare;
 import co.com.lulobank.utils.jsonUtils.JsonManage;
@@ -15,7 +14,7 @@ import java.util.Map;
 
 public class ValidateUser implements Question<Boolean> {
 
-    private GetUserModel userServiceResponse;
+    private User userServiceResponse;
     private User userTestRequired;
 
     public ValidateUser(List<Map<String,String>> users) {
@@ -25,12 +24,11 @@ public class ValidateUser implements Question<Boolean> {
     @Override
     public Boolean answeredBy(Actor actor) {
         try {
-            userServiceResponse = JsonManage.jsonToModel(JsonManage.readJsonResponsePersonal(
-                    ServiceResponse.objectService().getResponse(), "User"),GetUserModel.class);
+            userServiceResponse = JsonManage.jsonToModel(JsonManage.readJsonResponsePersonal(ServiceResponse.getResponse(), "User"),User.class);
         }catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return UsersCompare.compareUser(userServiceResponse.getDataUser(),userTestRequired);
+        return UsersCompare.compareUser(userServiceResponse,userTestRequired);
     }
 
     public static ValidateUser with (List<Map<String,String>> users){

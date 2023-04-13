@@ -1,6 +1,5 @@
 package co.com.lulobank.questions;
 
-import co.com.lulobank.models.entities.CreateResponse;
 import co.com.lulobank.models.entities.ServiceResponse;
 import co.com.lulobank.models.users.User;
 import co.com.lulobank.utils.compare.CreateCompare;
@@ -11,7 +10,7 @@ import net.serenitybdd.screenplay.Question;
 public class ValidateUserCreation implements Question<Boolean> {
 
     private User requestCreated;
-    private CreateResponse createResponse;
+    private User createResponse;
     private String typeMethod;
 
     public ValidateUserCreation(String typeMethod) {
@@ -22,12 +21,12 @@ public class ValidateUserCreation implements Question<Boolean> {
     public Boolean answeredBy(Actor actor) {
         try {
             requestCreated = JsonManage.jsonToModel(JsonManage.readJsonResponsePersonal(
-                    ServiceResponse.objectService().getRequest()
+                    ServiceResponse.getRequest()
                     , "RequestCreated"), User.class);
 
             createResponse = JsonManage.jsonToModel(JsonManage.readJsonResponsePersonal(
-                    ServiceResponse.objectService().getResponse()
-                    , "createResponse"),CreateResponse.class);
+                    ServiceResponse.getResponse()
+                    , "createResponse"),User.class);
 
         }catch (Exception e)
         {
