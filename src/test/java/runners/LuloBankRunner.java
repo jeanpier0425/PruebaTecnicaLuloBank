@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
         features = "src/test/resources/features/LuloBankTest.feature",
-        tags = "@GetList",
         glue = {"stepdefinitions"}
 )
 public class LuloBankRunner {
